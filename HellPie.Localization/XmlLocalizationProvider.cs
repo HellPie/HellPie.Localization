@@ -7,7 +7,7 @@ using System.Xml.Linq;
 using HellPie.Localization.IO;
 
 namespace HellPie.Localization {
-    public class LocalizationProvider {
+    public class XmlLocalizationProvider : ILocalizationProvider {
         private static readonly string InternalLanguagesPath = Path.Combine(Paths.LibraryPath(), "Languages");
         private static readonly string ExternalLanguagesPath = Path.Combine(Paths.DataPath(), "Languages");
 
@@ -17,7 +17,7 @@ namespace HellPie.Localization {
         public IEnumerable<Language> Languages => _languages.OrderBy(i => i.Name);
         public Language Default => _default;
 
-        public LocalizationProvider() {
+        public XmlLocalizationProvider() {
             if(!Directory.Exists(ExternalLanguagesPath)) {
                 Directory.CreateDirectory(ExternalLanguagesPath);
             }
@@ -54,6 +54,10 @@ namespace HellPie.Localization {
             }
 
             throw new KeyNotFoundException("Unable to find requested key in either requested Language or default Language.");
+        }
+
+        public string GetString(Language language, string key, params object[] args) {
+            return string.Format(GetString(language, key), args);
         }
 
         private void ReloadLanguages() {
