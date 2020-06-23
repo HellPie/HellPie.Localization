@@ -116,7 +116,7 @@ namespace HellPie.Localization {
                 language.Name = name;
             }
 
-            List<XElement> xmlEntries = root.Elements("string").ToList();
+            List<XElement> xmlEntries = root.Elements("entry").ToList();
             if(xmlEntries.Count == 0) {
                 return null;
             }
