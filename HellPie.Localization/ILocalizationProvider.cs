@@ -5,7 +5,7 @@ namespace HellPie.Localization {
         IEnumerable<Language> Languages { get; }
         Language Default { get; }
 
-        Language GetLanguage(string code);
+        Language GetLanguage(string tag);
         string GetString(Language language, string key);
         string GetString(Language language, string key, params object[] args);
     }

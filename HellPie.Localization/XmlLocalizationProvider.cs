@@ -25,12 +25,12 @@ namespace HellPie.Localization {
             ReloadLanguages();
         }
 
-        public Language GetLanguage(string code) {
-            if(string.IsNullOrWhiteSpace(code)) {
-                throw new ArgumentNullException(nameof(code), "Only valid IETF Language Tag can be requested.");
+        public Language GetLanguage(string tag) {
+            if(string.IsNullOrWhiteSpace(tag)) {
+                throw new ArgumentNullException(nameof(tag), "Only valid IETF Language Tag can be requested.");
             }
 
-            return _languages.FirstOrDefault(i => string.Equals(i.Code, code, StringComparison.InvariantCultureIgnoreCase));
+            return _languages.FirstOrDefault(i => string.Equals(i.Tag, tag, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public string GetString(Language language, string key) {
@@ -90,7 +90,7 @@ namespace HellPie.Localization {
                     _languages.Add(loadedLanguage);
                 }
 
-                if(string.Equals(loadedLanguage.Code, CultureInfo.CurrentCulture.Name, StringComparison.InvariantCultureIgnoreCase)) {
+                if(string.Equals(loadedLanguage.Tag, CultureInfo.CurrentCulture.Name, StringComparison.InvariantCultureIgnoreCase)) {
                     _default = loadedLanguage;
                 }
             }
@@ -104,13 +104,13 @@ namespace HellPie.Localization {
                 return null;
             }
 
-            string code = root.Attribute("code")?.Value;
+            string tag = root.Attribute("tag")?.Value;
 
-            if(string.IsNullOrWhiteSpace(code)) {
+            if(string.IsNullOrWhiteSpace(tag)) {
                 return null;
             }
 
-            Language language = new Language(code);
+            Language language = new Language(tag);
             string name = root.Attribute("name")?.Value;
             if(!string.IsNullOrWhiteSpace(name)) {
                 language.Name = name;
